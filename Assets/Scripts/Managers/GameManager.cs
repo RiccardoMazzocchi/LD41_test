@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
     public CardsManager cm;
     public UIManager uim;
     public LevelManager lm;
+    public SlotsManager sm;
 	// Use this for initialization
 	void Start () {
         if (Instance == null)
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour {
         cm = GetComponent<CardsManager>();
         uim = GetComponent<UIManager>();
         lm = GetComponent<LevelManager>();
+        sm = GetComponent<SlotsManager>();
 
 	}
 	

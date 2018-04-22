@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour {
 
+    public enum Direction { Left, Right }
+    Direction currentDirection;
 
 
 	// Use this for initialization
@@ -26,4 +28,10 @@ public class PlayerScript : MonoBehaviour {
             }
         }
 	}
+
+    public void Movement()
+    {
+
+    }
+
 }

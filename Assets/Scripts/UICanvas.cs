@@ -10,13 +10,13 @@ public class UICanvas : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        background.sizeDelta = new Vector3(Screen.width, (Screen.height / 100f) * 25f);
+        background.sizeDelta = new Vector3(Screen.width, (Screen.height / 100f) * 20f);
 
         
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        background.sizeDelta = new Vector3(Screen.width, (Screen.height / 100f) * 20f);
+    }
 }

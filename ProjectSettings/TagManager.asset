@@ -8,6 +8,8 @@ TagManager:
   - MovementSlot
   - ActionSlot
   - EmptySlot
+  - EnvironmentalDanger
+  - Enemy
   layers:
   - Default
   - TransparentFX

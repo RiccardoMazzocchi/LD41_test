@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardsManager : MonoBehaviour {
 
@@ -8,9 +9,13 @@ public class CardsManager : MonoBehaviour {
 
     public CardData[] cardsData;
 
+    public Sprite noCard;
+
+    public int deckCount;
+
 	// Use this for initialization
 	void Start () {
-        cards = FindObjectsOfType<Card>();
+        deckCount = 30;
 	}
 	
 	// Update is called once per frame
@@ -19,12 +24,15 @@ public class CardsManager : MonoBehaviour {
 
     public void FillCards()
     {
+        cards = FindObjectsOfType<Card>();
         foreach (Card card in cards)
         {
             if (!card.hasCard)
             {
                 card.cardData = cardsData[Random.Range(0, cardsData.Length)];
                 card.SetCard();
+                deckCount--;
+                GameManager.Instance.uim.deckCountText.text = deckCount.ToString();
             }
         }
     }

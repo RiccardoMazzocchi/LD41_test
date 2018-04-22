@@ -13,12 +13,12 @@ public class Card : MonoBehaviour, IPointerDownHandler
 
 	// Use this for initialization
 	void Start () {
-        img = GetComponent<Image>();
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (img.sprite == null)
+		if (cardData == null)
         {
             hasCard = false;
         }
@@ -26,6 +26,7 @@ public class Card : MonoBehaviour, IPointerDownHandler
 
     public void SetCard()
     {
+        img = GetComponent<Image>();
         img.sprite = cardData.cardImage;
         hasCard = true;
     }
@@ -33,7 +34,7 @@ public class Card : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         cardData = null;
-        img.sprite = null;
+        img.sprite = GameManager.Instance.cm.noCard;
     }
 
 }

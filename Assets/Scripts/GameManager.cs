@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance;
     public TurnManager tm;
-
+    public CardsManager cm;
+    public UIManager uim;
+    public LevelManager lm;
 	// Use this for initialization
 	void Start () {
         if (Instance == null)
@@ -15,10 +17,11 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
 
         tm = GetComponent<TurnManager>();
+        cm = GetComponent<CardsManager>();
+        uim = GetComponent<UIManager>();
+        lm = GetComponent<LevelManager>();
+
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 }

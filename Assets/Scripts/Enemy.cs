@@ -4,13 +4,27 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    bool goingRight;
+    public Transform startPoint, endPoint;
+
+
+
+    private void Start()
+    {
+    }
+
+    public void Movement()
+    {
+        if (transform.position == startPoint.position)
+            goingRight = false;
+        else if (transform.position == endPoint.position)
+            goingRight = true;
+
+        if (goingRight)
+            transform.position += new Vector3(1, 0, 0);
+        else if (!goingRight)
+            transform.position -= new Vector3(1, 0, 0);
+    }
+
+
 }

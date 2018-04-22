@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour {
 
+    int currentEnemies;
+    int i;
 
     //general turn enum, will be the first check always
     public enum MacroTurn { PlayerTurn, OtherTurn };
@@ -61,15 +63,26 @@ public class TurnManager : MonoBehaviour {
 
     private void Start()
     {
+        //debugging
         CurrentMacroTurn = MacroTurn.PlayerTurn;
+        CurrentMacroPhase = MacroPhase.Menu;
+        CurrentTurnState = TurnState.Movement;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ChangeTurn();
-        }
+    //  //debugging
+    //  if (Input.GetKeyDown(KeyCode.E))
+    //  {
+    //      if (CurrentMacroPhase == MacroPhase.Menu)
+    //      {
+    //          CurrentMacroPhase = MacroPhase.Deck;
+    //      }
+    //      else if (CurrentMacroPhase == MacroPhase.Deck)
+    //      {
+    //          CurrentMacroPhase = MacroPhase.Game;
+    //      }
+    //   }
     }
 
     bool MacroPhaseChange(MacroPhase newPhase)
@@ -96,6 +109,8 @@ public class TurnManager : MonoBehaviour {
         switch (newState)
         {
             case TurnState.Movement:
+                if (CurrentMacroPhase != MacroPhase.Game)
+                    return false;
                 return true;
             case TurnState.Action:
                 if (CurrentTurnState != TurnState.Movement)
@@ -112,6 +127,23 @@ public class TurnManager : MonoBehaviour {
         {
             case TurnState.Movement:
                 Debug.Log("Movement TurnState");
+
+                Enemy[] enemies = FindObjectsOfType<Enemy>();
+                currentEnemies = enemies.Length;
+                
+                if (CurrentMacroTurn == MacroTurn.OtherTurn)
+                {
+                    foreach (Enemy enemy in enemies)
+                    {
+                        enemy.Movement();
+                        i++;
+                        if (i == currentEnemies)
+                        {
+                            ChangeTurn();
+                            i = 0;
+                        }
+                    }
+                }
                 break;
             case TurnState.Action:
                 Debug.Log("Action TurnState");
@@ -126,10 +158,13 @@ public class TurnManager : MonoBehaviour {
         switch (macroPhaseStart)
         {
             case MacroPhase.Menu:
+                Debug.Log("You are now in MacroPhase Menu");
                 break;
             case MacroPhase.Deck:
+                Debug.Log("You are now in MacroPhase Deck");
                 break;
             case MacroPhase.Game:
+                Debug.Log("You are now in MacroPhase Game");
                 break;
             default:
                 break;
@@ -141,13 +176,15 @@ public class TurnManager : MonoBehaviour {
         switch (CurrentMacroPhase)
         {
             case MacroPhase.Menu:
-                Debug.Log("Menu MacroPhase");
                 break;
             case MacroPhase.Deck:
-                Debug.Log("Deck MacroPhase");
                 break;
             case MacroPhase.Game:
-                Debug.Log("Game MacroPhase");
+                CurrentTurnState = TurnState.Movement;
+                if (CurrentMacroTurn == MacroTurn.PlayerTurn)
+                {
+                    GameManager.Instance.cm.FillCards();
+                }
                 break;
             default:
                 break;

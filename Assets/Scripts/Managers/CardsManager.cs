@@ -32,7 +32,7 @@ public class CardsManager : MonoBehaviour
             cardInstance.GetComponent<Card>().cardData = cardsData[i];
             cardInstance.GetComponent<Card>().SetCard();
             cardInstance.transform.position = new Vector3(1000, 1000, 0);
-            cardInstance.transform.parent = transform;
+            cardInstance.transform.SetParent(transform);
             cards.Add(cardInstance.GetComponent<Card>());
         }
     }

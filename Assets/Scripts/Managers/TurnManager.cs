@@ -65,7 +65,7 @@ public class TurnManager : MonoBehaviour {
     {
         //debugging
         CurrentMacroTurn = MacroTurn.PlayerTurn;
-        CurrentMacroPhase = MacroPhase.Menu;
+        CurrentMacroPhase = MacroPhase.Game;
         CurrentTurnState = TurnState.Movement;
     }
 
@@ -92,12 +92,8 @@ public class TurnManager : MonoBehaviour {
             case MacroPhase.Menu:
                 return true;
             case MacroPhase.Deck:
-                if (CurrentMacroPhase != MacroPhase.Menu)
-                    return false;
                 return true;
             case MacroPhase.Game:
-                if (CurrentMacroPhase != MacroPhase.Deck)
-                    return false;
                 return true;
             default:
                 return false;
@@ -175,6 +171,7 @@ public class TurnManager : MonoBehaviour {
             case MacroPhase.Deck:
                 break;
             case MacroPhase.Game:
+
                 CurrentTurnState = TurnState.Movement;
                 if (CurrentMacroTurn == MacroTurn.PlayerTurn)
                 {

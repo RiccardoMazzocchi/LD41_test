@@ -38,10 +38,9 @@ public class PlayerScript : MonoBehaviour {
            yield return new WaitForSeconds(.5f);
        }
         hasDropped = true;
-        StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
-        yield return new WaitForSeconds(0.1f);
         GameManager.Instance.sm.cardInPlay = false;
         GameManager.Instance.sm.cardHasPlayed = true;
+        StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
         yield return null;
     }
 

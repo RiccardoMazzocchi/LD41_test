@@ -6,13 +6,13 @@ using DG.Tweening;
 public class PlayerScript : MonoBehaviour {
 
     public enum Direction { Left, Right }
-    Direction currentDirection;
+    public Direction currentDirection;
 
     CollisionCheck collCheck;
     GroundCollisionCheck groundCollCheck;
 
     public GameObject leftSlot, rightSlot, actionSlot;
-
+    public GameObject fireball;
 
     Enemy[] enemies;
 
@@ -63,6 +63,23 @@ public class PlayerScript : MonoBehaviour {
                     currentDirection = Direction.Right;
                     Destroy(actionSlot.transform.GetChild(0).gameObject);
                 }
+            }
+
+            if (actionSlot.transform.GetChild(0).GetComponent<Card>().cardData.name == "FireBallCard")
+            {
+                GameObject fb;
+                if (currentDirection == Direction.Right)
+                {
+                    fb = Instantiate(fireball, transform.position, Quaternion.identity);
+                    fb.transform.position = new Vector3(transform.position.x + 1, transform.position.y, 0);
+                }
+                else if (currentDirection == Direction.Left)
+                {
+                    fb = Instantiate(fireball, transform.position, Quaternion.identity);
+                    fb.transform.position = new Vector3(transform.position.x - 1, transform.position.y, 0);
+                }
+
+                Destroy(actionSlot.transform.GetChild(0).gameObject);
             }
         }
 
@@ -190,6 +207,7 @@ public class PlayerScript : MonoBehaviour {
             }
             else if (rightSlot.transform.GetChild(0).GetComponent<Card>().cardData.name == "JumpUpCard")
             {
+                currentDirection = Direction.Right;
                 transform.DOMove(new Vector3(transform.position.x, transform.position.y + 1, 0), 0.1f);
                 GameManager.Instance.sm.cardHasPlayed = true;
                 jumpUpping = true;
@@ -197,6 +215,7 @@ public class PlayerScript : MonoBehaviour {
             }
             else if (rightSlot.transform.GetChild(0).GetComponent<Card>().cardData.name == "StopCard")
             {
+                currentDirection = Direction.Right;
                 transform.position += new Vector3(0, 0, 0);
                 GameManager.Instance.sm.cardHasPlayed = true;
                 StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
@@ -255,6 +274,7 @@ public class PlayerScript : MonoBehaviour {
             }
             else if (leftSlot.transform.GetChild(0).GetComponent<Card>().cardData.name == "JumpUpCard")
             {
+                currentDirection = Direction.Left;
                 transform.DOMove(new Vector3(transform.position.x, transform.position.y + 1, 0), 0.1f);
                 GameManager.Instance.sm.cardHasPlayed = true;
                 jumpUpping = true;
@@ -262,6 +282,7 @@ public class PlayerScript : MonoBehaviour {
             }
             else if (leftSlot.transform.GetChild(0).GetComponent<Card>().cardData.name == "StopCard")
             {
+                currentDirection = Direction.Left;
                 transform.position += new Vector3(0, 0, 0);
                 GameManager.Instance.sm.cardHasPlayed = true;
                 StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());

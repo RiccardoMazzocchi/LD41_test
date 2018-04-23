@@ -125,6 +125,7 @@ public class TurnManager : MonoBehaviour {
 
                 Enemy[] enemies = FindObjectsOfType<Enemy>();
                 currentEnemies = enemies.Length;
+                Fireball[] fireball = FindObjectsOfType<Fireball>();
                 
                 if (CurrentMacroTurn == MacroTurn.OtherTurn)
                 {
@@ -136,6 +137,16 @@ public class TurnManager : MonoBehaviour {
                         {
                             i = 0;
                             StartCoroutine(ChangeTurnCoroutine());
+                        }
+                    }
+                }
+                else if (CurrentMacroTurn == MacroTurn.PlayerTurn)
+                {
+                    if (fireball != null)
+                    {
+                        foreach (Fireball fb in fireball)
+                        {
+                            fb.Move();
                         }
                     }
                 }

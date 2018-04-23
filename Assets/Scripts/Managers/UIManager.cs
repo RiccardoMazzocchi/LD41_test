@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour {
 
         gameCanvas.SetActive(true);
         GameManager.Instance.tm.CurrentMacroPhase = TurnManager.MacroPhase.Game;
+        GameManager.Instance.cm.InitializeDeck();
         GameManager.Instance.cm.FillCards();
     }
 	
@@ -42,12 +43,6 @@ public class UIManager : MonoBehaviour {
             Time.timeScale = 1f;
         }
 	}
-
-    public void StartButton()
-    {
-        //menuCanvas.SetActive(false);
-        deckCanvas.SetActive(true);
-    }
 
     public void EndDeck()
     {

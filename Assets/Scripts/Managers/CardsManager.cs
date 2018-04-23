@@ -16,16 +16,25 @@ public class CardsManager : MonoBehaviour
     public int deckCount;
     public int actionCards;
 
-    int cardDataIndex;
-
     public GameObject cardToInstantiate;
     GameObject cardInstance;
+
     // Use this for initialization
     void Start()
     {
         actionCards = 0;
         deckCount = 30;
 
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
+
+    public void InitializeDeck()
+    {
         foreach (int i in GameManager.Instance.deckManager.cardsPickedIndex)
         {
             cardInstance = Instantiate(cardToInstantiate, transform.position, Quaternion.identity);
@@ -37,11 +46,6 @@ public class CardsManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     public void FillCards()
     {
         Debug.Log("Creating cards");
@@ -51,22 +55,11 @@ public class CardsManager : MonoBehaviour
         {
             if (!slot.hasCard && slot.name == "EmptyCard" && deckCount >= 0 && slot.transform.childCount == 0)
             {
-                Card randomCard = cards[Random.Range(0, cards.Count - 1)];
+                Card randomCard = cards[Random.Range(0, cards.Count)];
                 randomCard.gameObject.transform.position = slot.transform.position;
-                randomCard.gameObject.transform.parent = slot.transform;
+                randomCard.gameObject.transform.SetParent(slot.transform);
                 randomCard.gameObject.transform.localScale = new Vector3(1, 1, 1);
                 cards.Remove(randomCard);
-
-                //   cardInstance = Instantiate(cardToInstantiate, slot.transform.position, Quaternion.identity, slot.transform);
-                //   cardInstance.GetComponent<Card>().cardData = cardsData[Random.Range(0, cardsData.Length)];
-                //   cardInstance.GetComponent<Card>().SetCard();
-                //   deckCount--;
-                //   GameManager.Instance.uim.deckCountText.text = deckCount.ToString();
-                //
-                //   if (cardInstance.GetComponent<Card>().cardData.cardType == CardData.CardType.Action)
-                //   {
-                //       actionCards++;
-                //   }
             }
         }
 

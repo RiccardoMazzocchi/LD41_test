@@ -754,6 +754,12 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114013607878502640, guid: 2d4460e64255c4840b4d2f812cc20c93,
+        type: 2}
+      propertyPath: fireball
+      value: 
+      objectReference: {fileID: 1102637726461784, guid: a6a3588e2a98eab44905dbad7bf682f5,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2d4460e64255c4840b4d2f812cc20c93, type: 2}
   m_IsPrefabParent: 0
@@ -8258,8 +8264,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameCanvas: {fileID: 1306394289}
-  deckCanvas: {fileID: 0}
-  menuCanvas: {fileID: 0}
   pauseCanvas: {fileID: 1168566204}
   goButton: {fileID: 1512813000}
   deckCountText: {fileID: 1575108317}

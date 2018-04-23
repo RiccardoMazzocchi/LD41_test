@@ -43,24 +43,24 @@ public class CardDeck : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             cardIndex = 4;
             cardSpriteDesc = stopDesc;
         }
-        else if (gameObject.name == "FireBallCard")
-        {
-            cardIndex = 5;
-            cardSpriteDesc = fireballDesc;
-        }
+    //   else if (gameObject.name == "FireBallCard")
+    //   {
+    //       cardIndex = 5;
+    //       cardSpriteDesc = fireballDesc;
+    //   }
         else if (gameObject.name == "DoubleJumpCard")
         {
-            cardIndex = 6;
+            cardIndex = 5;
             cardSpriteDesc = doubleJumpDesc;
         }
         else if (gameObject.name == "PunchCard")
         {
-            cardIndex = 7;
+            cardIndex = 6;
             cardSpriteDesc = punchDesc;
         }
         else if (gameObject.name == "SwapCard")
         {
-            cardIndex = 8;
+            cardIndex = 7;
             cardSpriteDesc = swapDesc;
         }
     }

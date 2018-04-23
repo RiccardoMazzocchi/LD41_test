@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour {
     bool goingRight;
     public Transform startPoint, endPoint;
 
-
+    public bool iWillDie;
 
     private void Start()
     {

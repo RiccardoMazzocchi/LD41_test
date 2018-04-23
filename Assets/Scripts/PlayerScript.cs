@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour {
 
-    public enum Direction { Left, Right }
-    Direction currentDirection;
+    CollisionCheck collCheck;
 
-    public GameObject leftSlot, rightSlot, actionSlot; 
+    public GameObject leftSlot, rightSlot, actionSlot;
 
-	// Use this for initialization
-	void Start () {
-	}
+
+    Enemy[] enemies;
+
+    // Use this for initialization
+    void Start () {
+        collCheck = GetComponentInChildren<CollisionCheck>();
+        enemies = FindObjectsOfType<Enemy>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -141,6 +145,26 @@ public class PlayerScript : MonoBehaviour {
         }
 
 
+        if (actionSlot.transform.childCount > 0)
+        {
+            if (actionSlot.transform.GetChild(0).GetComponent<Card>().cardData.name == "PunchCard")
+            {
+                if (collCheck.enemyInSight)
+                {
+                    foreach (Enemy enemy in enemies)
+                    {
+                        if (enemy.iWillDie == true)
+                        {
+                            Destroy(enemy.gameObject);
+                        }
+                        else if (enemy == null)
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+        }
 
         //if jump, vector3 (0,1,0) + vector3 ((-)1,0,0) and drop
         //if high jump, vector3 (0,1,0) + vector3 ((-)1,0,0) and then again vector3 (0,1,0) + vector3 ((-)1,0,0) and drop
@@ -153,7 +177,7 @@ public class PlayerScript : MonoBehaviour {
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnvironmentalDanger")
         {

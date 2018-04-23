@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: HighJumpCard
   m_EditorClassIdentifier: 
   cardType: 1
-  cardImage: {fileID: 21300000, guid: c8246aa0a7d7088448fcea667b72e6a0, type: 3}
+  cardImage: {fileID: 21300000, guid: f8ff58f699c7f39418e54481f02acc4d, type: 3}

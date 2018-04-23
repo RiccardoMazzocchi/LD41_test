@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: StopCard
   m_EditorClassIdentifier: 
   cardType: 1
-  cardImage: {fileID: 21300000, guid: 0422d7d06879c6f4ba59255e98d7521d, type: 3}
+  cardImage: {fileID: 21300000, guid: 1d0b270ef6e87fc4da79f2666d5e3552, type: 3}

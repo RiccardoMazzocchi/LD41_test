@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Name: JumpUpCard
   m_EditorClassIdentifier: 
   cardType: 1
-  cardImage: {fileID: 21300000, guid: 566e60056fc16314f9ee690058475ef3, type: 3}
+  cardImage: {fileID: 21300000, guid: 6aad61826f935f341a5b14c6f7881e48, type: 3}

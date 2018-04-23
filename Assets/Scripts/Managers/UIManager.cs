@@ -8,20 +8,39 @@ public class UIManager : MonoBehaviour {
     public GameObject gameCanvas;
     public GameObject deckCanvas;
     public GameObject menuCanvas;
+    public GameObject pauseCanvas;
     public GameObject goButton;
 
     public Text deckCountText;
+
+    bool paused;
+
+
 
 	// Use this for initialization
 	void Start () {
         menuCanvas.SetActive(true);
         gameCanvas.SetActive(false);
         deckCanvas.SetActive(false);
+        pauseCanvas.SetActive(false);
+
+        paused = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetKeyDown(KeyCode.Escape) && !paused)
+        {
+            pauseCanvas.SetActive(true);
+            paused = true;
+            Time.timeScale = 0f;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && paused)
+        {
+            pauseCanvas.SetActive(false);
+            paused = false;
+            Time.timeScale = 1f;
+        }
 	}
 
     public void StartButton()

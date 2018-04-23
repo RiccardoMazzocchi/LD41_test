@@ -306,6 +306,16 @@ public class PlayerScript : MonoBehaviour {
         {
             Debug.Log("spikes");
         }
+
+        if (collision.tag == "Flag")
+        {
+            Debug.Log("YOU WIN");
+        }
+
+        if (collision.tag == "Star")
+        {
+            Destroy(collision.gameObject);
+        }
     }
 
 }

@@ -13,6 +13,8 @@ TagManager:
   - Ground
   - RightCheck
   - LeftCheck
+  - Flag
+  - Star
   layers:
   - Default
   - TransparentFX

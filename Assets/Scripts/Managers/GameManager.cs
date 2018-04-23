@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
     public UIManager uim;
     public LevelManager lm;
     public SlotsManager sm;
+    public PlayerScript player;
 	// Use this for initialization
 	void Start () {
         if (Instance == null)
@@ -22,7 +23,7 @@ public class GameManager : MonoBehaviour {
         uim = GetComponent<UIManager>();
         lm = GetComponent<LevelManager>();
         sm = GetComponent<SlotsManager>();
-
+        player = FindObjectOfType<PlayerScript>();
 	}
 	
 

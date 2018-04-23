@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour {
     public GameObject gameCanvas;
     public GameObject deckCanvas;
     public GameObject menuCanvas;
+    public GameObject goButton;
 
     public Text deckCountText;
 
@@ -36,5 +37,15 @@ public class UIManager : MonoBehaviour {
         gameCanvas.SetActive(true);
         GameManager.Instance.tm.CurrentMacroPhase = TurnManager.MacroPhase.Game;
         GameManager.Instance.cm.FillCards();
+    }
+
+    public void DisableGoButton()
+    {
+        goButton.GetComponent<Button>().enabled = false;
+    }
+
+    public void EnableGoButton()
+    {
+        goButton.GetComponent<Button>().enabled = true;
     }
 }

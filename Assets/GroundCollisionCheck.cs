@@ -9,6 +9,7 @@ public class GroundCollisionCheck : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log(collision.gameObject.tag.ToString());
         if (collision.gameObject.tag == "Ground")
         {
             touchingGround = true;
@@ -22,8 +23,19 @@ public class GroundCollisionCheck : MonoBehaviour {
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Ground")
+        {
+            touchingGround = true;
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        touchingGround = false;
+        if (collision.tag == "Ground")
+        {
+            touchingGround = false;
+        }
     }
 }

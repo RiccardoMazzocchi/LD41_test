@@ -138,9 +138,10 @@ public class TurnManager : MonoBehaviour {
                         i++;
                         if (i == currentEnemies)
                         {
-                            //ChangeTurn();
-                            StartCoroutine(ChangeTurnCoroutine());
                             i = 0;
+                            StartCoroutine(ChangeTurnCoroutine());
+
+                            
                         }
                     }
                 }
@@ -206,13 +207,19 @@ public class TurnManager : MonoBehaviour {
     {
         if (CurrentMacroTurn == MacroTurn.PlayerTurn)
         {
+            Debug.Log("Other Turn");
+            GameManager.Instance.uim.DisableGoButton();
             yield return new WaitForSeconds(0.75f);
             CurrentMacroTurn = MacroTurn.OtherTurn;
         }
         else if (CurrentMacroTurn == MacroTurn.OtherTurn)
         {
+            Debug.Log("Player Turn");
             yield return new WaitForSeconds(0.75f);
             CurrentMacroTurn = MacroTurn.PlayerTurn;
+            yield return new WaitForSeconds(0.25f);
+            GameManager.Instance.uim.EnableGoButton();
+            Debug.Log("Button reenabled");
         }
     }
 }

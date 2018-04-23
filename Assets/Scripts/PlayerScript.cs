@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour {
     Direction currentDirection;
 
     CollisionCheck collCheck;
+    GroundCollisionCheck groundCollCheck;
 
     public GameObject leftSlot, rightSlot, actionSlot;
 
@@ -20,36 +21,23 @@ public class PlayerScript : MonoBehaviour {
     // Use this for initialization
     void Start () {
         collCheck = GetComponentInChildren<CollisionCheck>();
+        groundCollCheck = GetComponentInChildren<GroundCollisionCheck>();
         enemies = FindObjectsOfType<Enemy>();
     }
-	
-	// Update is called once per frame
-	void Update () {
-        if (GameManager.Instance.tm.CurrentMacroTurn == TurnManager.MacroTurn.PlayerTurn && GameManager.Instance.tm.CurrentMacroPhase == TurnManager.MacroPhase.Game)
-        {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                transform.position += new Vector3(1, 0, 0);
-                //GameManager.Instance.tm.ChangeTurn();
-                StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
-            }
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                transform.position -= new Vector3(1, 0, 0);
-                //GameManager.Instance.tm.ChangeTurn();
-                StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
-            }
-        }
-	}
+
 
     IEnumerator DropFromJump()
     {
-        while (!gameObject.transform.GetChild(2).GetComponent<GroundCollisionCheck>().touchingGround)
-        {
-            //transform.position += new Vector3(0, -1, 0);
-            transform.DOMove(new Vector3(transform.position.x, transform.position.y - 1, 0), 0.5f);
-            yield return new WaitForSeconds(.01f);
-        }
+       while (!gameObject.transform.GetChild(2).GetComponent<GroundCollisionCheck>().touchingGround)
+       {
+           //transform.position += new Vector3(0, -1, 0);
+           transform.DOMove(new Vector3(transform.position.x, transform.position.y - 1, 0), 0.5f);
+           yield return new WaitForSeconds(.05f);
+       }
+        yield return new WaitForSeconds(0.1f);
+        transform.DOMove(new Vector3(transform.position.x, transform.position.y, 0), 0.01f, true);
+        GameManager.Instance.sm.cardInPlay = false;
+        GameManager.Instance.sm.cardHasPlayed = true;
         yield return null;
     }
 
@@ -62,13 +50,13 @@ public class PlayerScript : MonoBehaviour {
             {
                 if (currentDirection == Direction.Right)
                 {
-                    transform.DOMove(new Vector3(transform.position.x + 1, transform.position.y + 1, 0), 0.5f);
+                    transform.DOMove(new Vector3(transform.position.x + 1, transform.position.y + 1, 0), 0.5f, true);
                     Destroy(actionSlot.transform.GetChild(0).gameObject);
                     StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
                 }
                 else if (currentDirection == Direction.Left)
                 {
-                    transform.DOMove(new Vector3(transform.position.x - 1, transform.position.y + 1, 0), 0.5f);
+                    transform.DOMove(new Vector3(transform.position.x - 1, transform.position.y + 1, 0), 0.5f, true);
                     Destroy(actionSlot.transform.GetChild(0).gameObject);
                     StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
                 }
@@ -87,16 +75,16 @@ public class PlayerScript : MonoBehaviour {
             {
                 if (currentDirection == Direction.Right)
                 {
-                    transform.DOMove(new Vector3(transform.position.x + 1, transform.position.y + 1, 0), 0.5f);
+                    transform.DOMove(new Vector3(transform.position.x + 1, transform.position.y + 1, 0), 0.5f, true);
                     Destroy(actionSlot.transform.GetChild(0).gameObject);
-                    //GameManager.Instance.tm.ChangeTurn();
+
                     StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
                 }
                 else if (currentDirection == Direction.Left)
                 {
-                    transform.DOMove(new Vector3(transform.position.x - 1, transform.position.y + 1, 0), 0.5f);
+                    transform.DOMove(new Vector3(transform.position.x - 1, transform.position.y + 1, 0), 0.5f, true);
                     Destroy(actionSlot.transform.GetChild(0).gameObject);
-                    //GameManager.Instance.tm.ChangeTurn();
+
                     StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
                 }
                 return;
@@ -114,7 +102,7 @@ public class PlayerScript : MonoBehaviour {
 
             jumping = true;
             highJumping = false;
-            //GameManager.Instance.tm.ChangeTurn();
+
             StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
             return;
         }
@@ -129,8 +117,11 @@ public class PlayerScript : MonoBehaviour {
             //if right slot has child, and child is RunCard, then move >
             if (rightSlot.transform.GetChild(0).GetComponent<Card>().cardData.name == "RunCard")
             {
-                transform.DOMove(new Vector3(transform.position.x + 1, 0, 0), 0.5f);
+                transform.DOMove(new Vector3(transform.position.x + 1, transform.position.y, 0), 0.5f, true);
                 currentDirection = Direction.Right;
+
+                rightSlot.transform.GetChild(0).GetComponent<DragHandler>().enabled = false;
+
                 StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
             }
 
@@ -140,6 +131,11 @@ public class PlayerScript : MonoBehaviour {
                 transform.DOMove(new Vector3(transform.position.x + 1, transform.position.y + 1, 0), 0.5f);
                 jumping = true;
                 currentDirection = Direction.Right;
+
+                GameManager.Instance.sm.cardInPlay = true;
+
+                rightSlot.transform.GetChild(0).GetComponent<DragHandler>().enabled = false;
+
                 StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
 
             }
@@ -150,6 +146,11 @@ public class PlayerScript : MonoBehaviour {
                 transform.DOMove(new Vector3(transform.position.x + 1, transform.position.y + 1, 0), 0.5f);
                 highJumping = true;
                 currentDirection = Direction.Right;
+
+                GameManager.Instance.sm.cardInPlay = true;
+
+                rightSlot.transform.GetChild(0).GetComponent<DragHandler>().enabled = false;
+
                 StartCoroutine(GameManager.Instance.tm.ChangeTurnCoroutine());
 
             }
@@ -264,9 +265,14 @@ public class PlayerScript : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnvironmentalDanger")
+        if (collision.gameObject.tag == "Enemy" && transform.position == collision.transform.position)
         {
             Destroy(gameObject);
+        }
+
+        if (collision.gameObject.tag == "EnvironmentalDanger")
+        {
+            Debug.Log("spikes");
         }
     }
 

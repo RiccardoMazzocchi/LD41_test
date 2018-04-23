@@ -22,11 +22,11 @@ public class Slot : MonoBehaviour, IDropHandler {
     {
         if (!item)
         {
-            if (Card.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Action && this.gameObject.tag == "ActionSlot"  && !GameManager.Instance.sm.cardAllowed ||
-                Card.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Movement && this.gameObject.tag == "MovementSlot" && GameManager.Instance.sm.cardAllowed ||
+            if (DragHandler.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Action && this.gameObject.tag == "ActionSlot"  && !GameManager.Instance.sm.cardAllowed ||
+                DragHandler.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Movement && this.gameObject.tag == "MovementSlot" && GameManager.Instance.sm.cardAllowed ||
                 this.gameObject.tag == "EmptySlot")
             {
-                Card.itemBeingDragged.transform.SetParent(transform);
+                DragHandler.itemBeingDragged.transform.SetParent(transform);
                 if (gameObject.tag == "MovementSlot")
                 {
                     GameManager.Instance.sm.cardAllowed = false;
@@ -37,6 +37,35 @@ public class Slot : MonoBehaviour, IDropHandler {
                 return;
             }
         }
+        else if (item && !GameManager.Instance.sm.cardInPlay && !GameManager.Instance.sm.cardHasPlayed)
+        {
+            DragHandler.itemBeingDragged.transform.SetParent(transform);
+
+            if (gameObject.transform.childCount > 1)
+            {
+                foreach (Slot slot in GameManager.Instance.sm.slots)
+                {
+                    if (slot.gameObject.tag == "EmptySlot" && slot.transform.childCount == 0)
+                    {
+                        gameObject.transform.GetChild(0).SetParent(slot.transform);
+                        return;
+                    }
+                }
+            }
+        }
+
+         else if (item && 
+                 DragHandler.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Movement &&
+                 this.gameObject.tag == "MovementSlot" && 
+                 !GameManager.Instance.sm.cardAllowed && 
+                 !GameManager.Instance.sm.cardInPlay &&
+                 GameManager.Instance.sm.cardHasPlayed)
+         {
+             Destroy(this.gameObject.transform.GetChild(0).gameObject);
+             DragHandler.itemBeingDragged.transform.SetParent(transform);
+             GameManager.Instance.sm.cardHasPlayed = false;
+         }
+
         else
         {
             return;

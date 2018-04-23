@@ -22,7 +22,7 @@ public class Slot : MonoBehaviour, IDropHandler {
     {
         if (!item)
         {
-            if (DragHandler.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Action && this.gameObject.tag == "ActionSlot"  && !GameManager.Instance.sm.cardAllowed ||
+            if (DragHandler.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Action && this.gameObject.tag == "ActionSlot" && !GameManager.Instance.sm.cardAllowed ||
                 DragHandler.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Movement && this.gameObject.tag == "MovementSlot" && GameManager.Instance.sm.cardAllowed ||
                 this.gameObject.tag == "EmptySlot")
             {
@@ -30,6 +30,21 @@ public class Slot : MonoBehaviour, IDropHandler {
                 if (gameObject.tag == "MovementSlot")
                 {
                     GameManager.Instance.sm.cardAllowed = false;
+                }
+            }
+            else if (DragHandler.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Movement && this.gameObject.tag == "MovementSlot" && !GameManager.Instance.sm.cardAllowed && !GameManager.Instance.sm.cardInPlay && GameManager.Instance.sm.cardHasPlayed)
+            {
+                foreach (Slot slot in GameManager.Instance.sm.slots)
+                {
+                    if (slot.tag == "MovementSlot" && slot.hasCard && slot.transform.childCount > 0)
+                    {
+                        Destroy(slot.transform.GetChild(0).gameObject);
+                    }
+                    else if (slot.tag == "MovementSlot" && !slot.hasCard && slot.transform.childCount == 0)
+                    {
+                        DragHandler.itemBeingDragged.transform.SetParent(slot.transform);
+                        GameManager.Instance.sm.cardHasPlayed = false;
+                    }
                 }
             }
             else
@@ -53,18 +68,18 @@ public class Slot : MonoBehaviour, IDropHandler {
                 }
             }
         }
+        else if (item &&
+                DragHandler.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Movement &&
+                this.gameObject.tag == "MovementSlot" &&
+                !GameManager.Instance.sm.cardAllowed &&
+                !GameManager.Instance.sm.cardInPlay &&
+                GameManager.Instance.sm.cardHasPlayed)
+        {
+            Destroy(this.gameObject.transform.GetChild(0).gameObject);
+            DragHandler.itemBeingDragged.transform.SetParent(transform);
+            GameManager.Instance.sm.cardHasPlayed = false;
+        }
 
-         else if (item && 
-                 DragHandler.itemBeingDragged.GetComponent<Card>().cardData.cardType == CardData.CardType.Movement &&
-                 this.gameObject.tag == "MovementSlot" && 
-                 !GameManager.Instance.sm.cardAllowed && 
-                 !GameManager.Instance.sm.cardInPlay &&
-                 GameManager.Instance.sm.cardHasPlayed)
-         {
-             Destroy(this.gameObject.transform.GetChild(0).gameObject);
-             DragHandler.itemBeingDragged.transform.SetParent(transform);
-             GameManager.Instance.sm.cardHasPlayed = false;
-         }
 
         else
         {

@@ -5,7 +5,6 @@ using UnityEngine;
 public class CollisionCheck : MonoBehaviour {
 
     public bool enemyInSight;
-    public bool terrainBlock;
 
 	// Use this for initialization
 	void Start () {
@@ -27,10 +26,5 @@ public class CollisionCheck : MonoBehaviour {
         }
         else
             enemyInSight = false;
-
-        if (collision.gameObject.tag == "Ground")
-            terrainBlock = true;
-        else
-            terrainBlock = false;
     }
 }

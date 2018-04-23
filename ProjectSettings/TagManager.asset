@@ -11,6 +11,8 @@ TagManager:
   - EnvironmentalDanger
   - Enemy
   - Ground
+  - RightCheck
+  - LeftCheck
   layers:
   - Default
   - TransparentFX

@@ -14,16 +14,16 @@ public class CardsManager : MonoBehaviour
     public Sprite noCard;
 
     public int deckCount;
-    int actionCards;
+    public int actionCards;
 
-    int maxIterations = 25;
-    int currentIterations;
+
 
     public GameObject cardToInstantiate;
-
+    GameObject cardInstance;
     // Use this for initialization
     void Start()
     {
+        actionCards = 0;
         deckCount = 30;
     }
 
@@ -32,52 +32,30 @@ public class CardsManager : MonoBehaviour
     {
     }
 
-    //   public void FillCards()
-    //   {
-    //       slots = FindObjectsOfType<Slot>();
-    //       foreach (Slot slot in slots)
-    //       {
-    //           if (!slot.hasCard && slot.name == "EmptyCard" && deckCount >= 0 && slot.transform.childCount == 0)
-    //           {
-    //               Instantiate(cardToInstantiate, slot.transform.position, Quaternion.identity, slot.transform);
-    //               cardToInstantiate.GetComponent<Card>().cardData = cardsData[Random.Range(0, cardsData.Length)];
-    //               cardToInstantiate.GetComponent<Card>().SetCard();
-    //               deckCount--;
-    //               GameManager.Instance.uim.deckCountText.text = deckCount.ToString();
-    //
-    //           }
-    //       }
-    //   }
-
     public void FillCards()
     {
+        Debug.Log("Creating cards");
+
         slots = FindObjectsOfType<Slot>();
         foreach (Slot slot in slots)
         {
             if (!slot.hasCard && slot.name == "EmptyCard" && deckCount >= 0 && slot.transform.childCount == 0)
             {
-                Instantiate(cardToInstantiate, slot.transform.position, Quaternion.identity, slot.transform);
-                cardToInstantiate.GetComponent<Card>().cardData = cardsData[Random.Range(0, cardsData.Length)];
-                cardToInstantiate.GetComponent<Card>().SetCard();
+                cardInstance = Instantiate(cardToInstantiate, slot.transform.position, Quaternion.identity, slot.transform);
+                cardInstance.GetComponent<Card>().cardData = cardsData[Random.Range(0, cardsData.Length)];
+                cardInstance.GetComponent<Card>().SetCard();
                 deckCount--;
                 GameManager.Instance.uim.deckCountText.text = deckCount.ToString();
-                if (cardToInstantiate.GetComponent<Card>().cardData.cardType == CardData.CardType.Action)
+
+                if (cardInstance.GetComponent<Card>().cardData.cardType == CardData.CardType.Action)
                 {
                     actionCards++;
-                    if (actionCards == slots.Length)
-                    {
-                        Destroy(cardToInstantiate);
-                        actionCards--;
-                        currentIterations++;
-                        if (currentIterations >= maxIterations)
-                        {
-                            Debug.Log("Couldn't find non-action card");
-                            return;
-                        }
-                    }
                 }
             }
         }
+
+        Debug.Log(actionCards);
     }
+
 }
 

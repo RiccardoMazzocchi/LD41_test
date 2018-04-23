@@ -22,8 +22,8 @@ public class Enemy : MonoBehaviour {
             goingRight = true;
 
         if (goingRight)
-            transform.DOMove(new Vector3(transform.position.x + 1, transform.position.y, 0), 0.5f);
+            transform.DOMove(new Vector3(transform.position.x + 1, transform.position.y, 0), 0.1f);
         else if (!goingRight)
-            transform.DOMove(new Vector3(transform.position.x - 1, transform.position.y, 0), 0.5f);
+            transform.DOMove(new Vector3(transform.position.x - 1, transform.position.y, 0), 0.1f);
     }
 }

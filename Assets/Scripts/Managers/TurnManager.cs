@@ -140,8 +140,6 @@ public class TurnManager : MonoBehaviour {
                         {
                             i = 0;
                             StartCoroutine(ChangeTurnCoroutine());
-
-                            
                         }
                     }
                 }
@@ -180,7 +178,7 @@ public class TurnManager : MonoBehaviour {
                 CurrentTurnState = TurnState.Movement;
                 if (CurrentMacroTurn == MacroTurn.PlayerTurn)
                 {
-                    GameManager.Instance.cm.FillCards();
+                        GameManager.Instance.cm.FillCards();
                 }
                 break;
             default:
@@ -205,19 +203,19 @@ public class TurnManager : MonoBehaviour {
 
     public IEnumerator ChangeTurnCoroutine()
     {
-        if (CurrentMacroTurn == MacroTurn.PlayerTurn)
+        if (CurrentMacroTurn == MacroTurn.PlayerTurn && GameManager.Instance.player.hasDropped)
         {
             Debug.Log("Other Turn");
             GameManager.Instance.uim.DisableGoButton();
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(0.5f);
             CurrentMacroTurn = MacroTurn.OtherTurn;
         }
         else if (CurrentMacroTurn == MacroTurn.OtherTurn)
         {
             Debug.Log("Player Turn");
-            yield return new WaitForSeconds(0.75f);
+            yield return new WaitForSeconds(0.5f);
             CurrentMacroTurn = MacroTurn.PlayerTurn;
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.1f);
             GameManager.Instance.uim.EnableGoButton();
             Debug.Log("Button reenabled");
         }

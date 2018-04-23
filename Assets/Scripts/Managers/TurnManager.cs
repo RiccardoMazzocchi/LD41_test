@@ -126,7 +126,6 @@ public class TurnManager : MonoBehaviour {
         switch (stateStart)
         {
             case TurnState.Movement:
-                Debug.Log("Movement TurnState");
 
                 Enemy[] enemies = FindObjectsOfType<Enemy>();
                 currentEnemies = enemies.Length;
@@ -139,14 +138,14 @@ public class TurnManager : MonoBehaviour {
                         i++;
                         if (i == currentEnemies)
                         {
-                            ChangeTurn();
+                            //ChangeTurn();
+                            StartCoroutine(ChangeTurnCoroutine());
                             i = 0;
                         }
                     }
                 }
                 break;
             case TurnState.Action:
-                Debug.Log("Action TurnState");
                 break;
             default:
                 break;
@@ -158,13 +157,10 @@ public class TurnManager : MonoBehaviour {
         switch (macroPhaseStart)
         {
             case MacroPhase.Menu:
-                Debug.Log("You are now in MacroPhase Menu");
                 break;
             case MacroPhase.Deck:
-                Debug.Log("You are now in MacroPhase Deck");
                 break;
             case MacroPhase.Game:
-                Debug.Log("You are now in MacroPhase Game");
                 break;
             default:
                 break;
@@ -191,16 +187,31 @@ public class TurnManager : MonoBehaviour {
         }
     }
 
-    public void ChangeTurn()
+//   public void ChangeTurn()
+//   {
+//       if (CurrentMacroTurn == MacroTurn.PlayerTurn)
+//       {
+//           Debug.Log("Other Turn");
+//           CurrentMacroTurn = MacroTurn.OtherTurn;
+//       }
+//       else if (CurrentMacroTurn == MacroTurn.OtherTurn)
+//       {
+//           Debug.Log("Player Turn");
+//           CurrentMacroTurn = MacroTurn.PlayerTurn;
+//       }
+//   }
+
+
+    public IEnumerator ChangeTurnCoroutine()
     {
         if (CurrentMacroTurn == MacroTurn.PlayerTurn)
         {
-            Debug.Log("Other Turn");
+            yield return new WaitForSeconds(0.75f);
             CurrentMacroTurn = MacroTurn.OtherTurn;
         }
         else if (CurrentMacroTurn == MacroTurn.OtherTurn)
         {
-            Debug.Log("Player Turn");
+            yield return new WaitForSeconds(0.75f);
             CurrentMacroTurn = MacroTurn.PlayerTurn;
         }
     }

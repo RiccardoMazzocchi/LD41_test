@@ -28,7 +28,7 @@ public class CollisionCheck : MonoBehaviour {
         else
             enemyInSight = false;
 
-        if (collision.gameObject.tag == "Terrain")
+        if (collision.gameObject.tag == "Ground")
             terrainBlock = true;
         else
             terrainBlock = false;

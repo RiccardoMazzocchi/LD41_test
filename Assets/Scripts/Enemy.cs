@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Enemy : MonoBehaviour {
 
@@ -21,10 +22,8 @@ public class Enemy : MonoBehaviour {
             goingRight = true;
 
         if (goingRight)
-            transform.position += new Vector3(1, 0, 0);
+            transform.DOMove(new Vector3(transform.position.x + 1, transform.position.y, 0), 0.5f);
         else if (!goingRight)
-            transform.position -= new Vector3(1, 0, 0);
+            transform.DOMove(new Vector3(transform.position.x - 1, transform.position.y, 0), 0.5f);
     }
-
-
 }

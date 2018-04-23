@@ -15,7 +15,8 @@ public class UIManager : MonoBehaviour {
 
     bool paused;
 
-
+    public Sprite goRed;
+    public Sprite goGreen;
 
 	// Use this for initialization
 	void Start () {
@@ -61,10 +62,12 @@ public class UIManager : MonoBehaviour {
     public void DisableGoButton()
     {
         goButton.GetComponent<Button>().enabled = false;
+        goButton.GetComponent<Image>().sprite = goRed;
     }
 
     public void EnableGoButton()
     {
         goButton.GetComponent<Button>().enabled = true;
+        goButton.GetComponent<Image>().sprite = goGreen;
     }
 }

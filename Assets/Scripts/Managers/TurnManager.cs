@@ -203,12 +203,15 @@ public class TurnManager : MonoBehaviour {
 
     public IEnumerator ChangeTurnCoroutine()
     {
-        if (CurrentMacroTurn == MacroTurn.PlayerTurn && GameManager.Instance.player.hasDropped)
+        if (CurrentMacroTurn == MacroTurn.PlayerTurn)
         {
-            Debug.Log("Other Turn");
             GameManager.Instance.uim.DisableGoButton();
-            yield return new WaitForSeconds(0.5f);
-            CurrentMacroTurn = MacroTurn.OtherTurn;
+            yield return new WaitForSeconds(0.25f);
+            if (GameManager.Instance.player.hasDropped)
+            {
+                CurrentMacroTurn = MacroTurn.OtherTurn;
+                Debug.Log("Other Turn");
+            }
         }
         else if (CurrentMacroTurn == MacroTurn.OtherTurn)
         {

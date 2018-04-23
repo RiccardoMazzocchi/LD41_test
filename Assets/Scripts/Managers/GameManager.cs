@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour {
     public LevelManager lm;
     public SlotsManager sm;
     public PlayerScript player;
+    public DeckManager deckManager;
+
 	// Use this for initialization
 	void Start () {
         if (Instance == null)
@@ -24,7 +26,8 @@ public class GameManager : MonoBehaviour {
         lm = GetComponent<LevelManager>();
         sm = GetComponent<SlotsManager>();
         player = FindObjectOfType<PlayerScript>();
-	}
+        deckManager = FindObjectOfType<DeckManager>();
+    }
 	
 
 }

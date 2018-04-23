@@ -9226,6 +9226,7 @@ MonoBehaviour:
   lm: {fileID: 0}
   sm: {fileID: 0}
   player: {fileID: 0}
+  deckManager: {fileID: 0}
 --- !u!114 &1707515298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9240,13 +9241,14 @@ MonoBehaviour:
   cards: []
   slots: []
   cardsData:
-  - {fileID: 11400000, guid: 563d9362296164547ac9ca4d24e51429, type: 2}
+  - {fileID: 11400000, guid: a8be816358e2fe9428399b45c6d4bfda, type: 2}
   - {fileID: 11400000, guid: b77318ff4cbb18545b7c2e1cd358ef45, type: 2}
   - {fileID: 11400000, guid: 2e485093c4a774e47a24a7a1dd622244, type: 2}
-  - {fileID: 11400000, guid: a8be816358e2fe9428399b45c6d4bfda, type: 2}
-  - {fileID: 11400000, guid: b6cb26a33294d914eb20d758a1c31b6e, type: 2}
   - {fileID: 11400000, guid: 74dbd68d6c2891241b7d25b41878e10b, type: 2}
   - {fileID: 11400000, guid: 6a72dab60c069ca4fbe2704773de065c, type: 2}
+  - {fileID: 11400000, guid: 565aed0bc471655439258cda3d9377ba, type: 2}
+  - {fileID: 11400000, guid: 563d9362296164547ac9ca4d24e51429, type: 2}
+  - {fileID: 11400000, guid: b6cb26a33294d914eb20d758a1c31b6e, type: 2}
   - {fileID: 11400000, guid: 3cb841a424b7c5542b2e291ce56ca7b0, type: 2}
   noCard: {fileID: 21300000, guid: 0d88d03f9df74c44faf6935ccb0ef289, type: 3}
   deckCount: 30
